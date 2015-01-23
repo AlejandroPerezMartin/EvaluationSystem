@@ -1,0 +1,23 @@
+{
+  "name": "Evaluation System",
+  "version": "1.0.0",
+  "authors": [
+    "Alejandro <aleperez92@gmail.com>"
+  ],
+  "description": "Evaluation system for WUT",
+  "main": "index.php",
+  "license": "MIT",
+  "homepage": "index.php",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "jquery": "~2.1.3"
+  }
+}
