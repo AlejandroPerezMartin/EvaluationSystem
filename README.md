@@ -9,5 +9,9 @@ Technologies:
 - jQuery
 - Grunt (task automation)
 
+# Grunt instructions
+- Open terminal, go to root folder and run: `npm install -g grunt-cli`
+- Now run: `npm install`
+
 # Author
 Alejandro Perez Martin
