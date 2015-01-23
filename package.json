@@ -1,0 +1,26 @@
+{
+  "name": "evaluation-system",
+  "description": "Evaluation System for WUT",
+      "author": "Alejandro Perez Martin",
+      "authorUrl": "http://www.linkedin.com/in/aleperez92",
+      "main": "index.php",
+      "repository": {
+          "type": "git",
+          "url": "https://github.com/AlejandroPerezMartin/EvaluationSystem"
+      },
+  "version": "1.0.0",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-csslint": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-nodeunit": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-uncss": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-uncss": "latest",
+    "jshint-stylish": "latest"
+  }
+}
