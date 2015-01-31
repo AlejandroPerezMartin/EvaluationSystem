@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `evsystem`;
 
 use evsystem;
 
-CREATE TABLE `users` (id int(10) NOT NULL AUTO_INCREMENT, name varchar(60) NOT NULL, email varchar(60) NOT NULL, age date NOT NULL, role tinyint NOT NULL, PRIMARY KEY (id));
+CREATE TABLE `users` (id int(10) NOT NULL AUTO_INCREMENT, name varchar(60) NOT NULL, email varchar(60) NOT NULL, age date NOT NULL, password varchar(40) NOT NULL, role smallint(2) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE `courses` (id int(10) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, description varchar(500), PRIMARY KEY (id));
 CREATE TABLE `exams` (id varchar(10) NOT NULL, name varchar(60) NOT NULL, grade float NOT NULL, start_date date NOT NULL, due_date date, duration int(7), enabled tinyint NOT NULL, user_id int(10) NOT NULL, alumn_id int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE `questions` (id int(10) NOT NULL AUTO_INCREMENT, statement varchar(500), max_number_points float, type tinyint, exam_template_id int(11) NOT NULL, PRIMARY KEY (id));
