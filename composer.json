@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpunit/phpunit": "4.5.*",
+	"phpunit/dbunit": ">=1.2"
+    }
+}
