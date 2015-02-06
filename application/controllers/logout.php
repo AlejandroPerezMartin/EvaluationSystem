@@ -1,12 +1,12 @@
 <?php
 /**
-* Class and Function List:
-* Function list:
-* - __construct()
-* - index()
-* Classes list:
-* - Logout extends CI_Controller
-*/
+ * Class and Function List:
+ * Function list:
+ * - __construct()
+ * - index()
+ * Classes list:
+ * - Logout extends CI_Controller
+ */
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Logout extends CI_Controller
@@ -22,4 +22,5 @@ class Logout extends CI_Controller
         $this->session->sess_destroy();
         redirect(base_url());
     }
+
 }

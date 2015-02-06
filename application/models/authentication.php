@@ -20,7 +20,7 @@ class Authentication extends CI_Model
 
     public function process_login($email, $password)
     {
-        $this->db->select('id, email, password, role');
+        $this->db->select('id, name, email, password, role');
         $this->db->from('users');
         $this->db->where('email', $email);
         $this->db->where('password', $this->encrypt->sha1(md5($password)));
@@ -30,9 +30,11 @@ class Authentication extends CI_Model
 
         if ($query->num_rows() == 1)
         {
-            // if user and password match, add to session data
-            $this->session->set_userdata(array('id' => $query->row->id, 'name' => $query->row->name, 'role' => $query->row->role, 'logged_in' => true));
-            return true;
+            foreach ($query->result() as $row) {
+                // if user and password match, add to session data
+                $this->session->set_userdata(array('id' => $row->id, 'name' => $row->name, 'role' => $row->role, 'logged_in' => true));
+                return true;
+            }
         }
         else
         {
