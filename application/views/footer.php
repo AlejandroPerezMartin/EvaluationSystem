@@ -12,7 +12,6 @@
     </div> <!-- /.container -->
 
     <!-- Scripts -->
-    <script src="<?php echo asset_url() . 'jquery/dist/jquery.min.js' ?>"></script>
     <script src="<?php echo asset_url() . 'bootstrap/dist/js/bootstrap.min.js' ?>"></script>
 
 </body>

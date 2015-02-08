@@ -29,7 +29,6 @@ class Login extends CI_Controller
         }
 
         $data = array('hide_menu' => true, 'hide_footer' => true, 'page_title' => 'Login', 'page_description' => 'Description goes here!', 'styles' => array('signin'));
-
         // Process login
         if ($this->input->post('submit_login'))
         {
@@ -40,14 +39,14 @@ class Login extends CI_Controller
 
             if ($this->form_validation->run() == true)
             {
-                if($this->authentication->process_login($this->input->post('email'), $this->input->post('password')))
+                if ($this->authentication->process_login($this->input->post('email'), $this->input->post('password')))
                 {
                     // Successful login
                     echo "You are logged in!";
                     // check user role and redirect
                     // redirect(base_url('index.php/admin'));
-                }
-                else
+
+                } else
                 {
                     $sub_data = array('login_failed' => 'Invalid email or password');
 
@@ -55,8 +54,7 @@ class Login extends CI_Controller
                     $this->load->view('login', $sub_data);
                     $this->load->view('footer');
                 }
-            }
-            else
+            } else
             {
                 $this->parser->parse('header', $data);
                 $this->load->view('login');
@@ -72,5 +70,4 @@ class Login extends CI_Controller
         }
     }
 }
-
 ?>

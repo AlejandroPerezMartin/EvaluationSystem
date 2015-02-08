@@ -15,6 +15,7 @@
     <?php if (isset($styles)): foreach ($styles as $style_name): ?>
     <link rel="stylesheet" href="<?php echo asset_url() . $style_name . '.css'; ?>">
     <?php endforeach; endif; ?>
+    <script src="<?php echo asset_url() . 'jquery/dist/jquery.min.js' ?>"></script>
 
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

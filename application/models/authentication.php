@@ -21,7 +21,7 @@ class Authentication extends CI_Model
     public function process_login($email, $password)
     {
         $this->db->select('id, name, email, password, role');
-        $this->db->from('users');
+        $this->db->from('user');
         $this->db->where('email', $email);
         $this->db->where('password', $this->encrypt->sha1(md5($password)));
         $this->db->limit(1);
@@ -52,6 +52,9 @@ class Authentication extends CI_Model
         return ($this->is_user_logged()) ? $this->session->userdata('logged_in') : '';
     }
 
+    /*
+     * User roles: admin (0), professor (1), student (2)
+     */
     public function get_logged_user_role()
     {
         return ($this->is_user_logged()) ? $this->session->userdata('role') : '';
