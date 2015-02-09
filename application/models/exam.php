@@ -19,12 +19,29 @@ class Exam extends CI_Model
 
     public function create_exam($exam_data)
     {
-        if (!is_array($exam_data) || empty($exam_data))
+        if (is_array($exam_data) && !empty($exam_data))
         {
-            return false;
+            $this->db->insert('exam_template', $exam_data);
+            return $this->db->insert_id();
         }
 
-        return $this->db->insert('exam_template', $exam_data);
+        return false;
+    }
+
+    public function enable_exam($exam_id)
+    {
+        if (!empty($exam_id)) {
+            $data = array('enabled' => 1);
+            return $this->db->update('exam_template', $data, array('id' => $exam_id, 'user_id' => $this->authentication->get_logged_user_id()));
+        }
+
+        return false;
+    }
+
+    public function get_exam_template($exam_id)
+    {
+        $query = $this->db->get_where('exam_template', array('id' => $exam_id), 1);
+        return $query->result();
     }
 
     public function is_user_enrolled_in_course($courseId)
@@ -32,5 +49,7 @@ class Exam extends CI_Model
         $query = $this->db->get_where('user_course', array('course_id' => $courseId, 'user_id' => $this->authentication->get_logged_user_id()), 1);
         return !empty($query->result());
     }
+
 }
+
 ?>

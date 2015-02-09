@@ -41,7 +41,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#exams">My exams</a></li>
                     <li><a href="#profile">My profile</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="<?php echo base_url() . 'index.php/logout'; ?>">Logout</a></li>
                 </ul>
             </div> <!-- /#navbar -->
         </div> <!-- /.container -->

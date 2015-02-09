@@ -7,7 +7,7 @@
 class AuthenticationModelTest extends CIUnit_TestCase
 {
 	protected $tables = array(
-		'users' => 'users'
+		'user' => 'user'
 	);
 
 	private $_pcm;
@@ -34,7 +34,7 @@ class AuthenticationModelTest extends CIUnit_TestCase
 	public function test_Process_login()
 	{
 		// existing user, right password
-		$this->assertTrue($this->_pcm->process_login('user@email.com', '123456'));
+		$this->assertTrue($this->_pcm->process_login('user@email.com', 'aleta'));
 		// existing user, empty password
 		$this->assertFalse($this->_pcm->process_login('user@email.com', ''));
 		// existing user, wrong password

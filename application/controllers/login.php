@@ -16,7 +16,7 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->load->library(array('parser', 'form_validation'));
-        $this->load->model('authentication');
+        $this->load->model(array('authentication', 'user'));
         $this->load->helper('form');
     }
 
@@ -41,11 +41,21 @@ class Login extends CI_Controller
             {
                 if ($this->authentication->process_login($this->input->post('email'), $this->input->post('password')))
                 {
-                    // Successful login
-                    echo "You are logged in!";
-                    // check user role and redirect
-                    // redirect(base_url('index.php/admin'));
-
+                    $user_role = $this->user->get_logged_user_role();
+                    switch ($user_role) {
+                        case '0':
+                            redirect(base_url('index.php/admin'));
+                            break;
+                        case '1':
+                            redirect(base_url('index.php/admin'));
+                            break;
+                        case '2':
+                            redirect(base_url('index.php/admin'));
+                            break;
+                        default:
+                            echo "There was an error loading the interface";
+                            break;
+                    }
                 } else
                 {
                     $sub_data = array('login_failed' => 'Invalid email or password');
