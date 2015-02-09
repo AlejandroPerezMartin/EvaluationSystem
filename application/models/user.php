@@ -19,7 +19,7 @@ class User extends CI_Model
 
     public function get_user_enrolled_courses()
     {
-        $logged_user_id = intval($this->authentication->get_logged_user_id());
+        $logged_user_id = $this->authentication->get_logged_user_id();
 
         $this->db->select('course_id, name, acronym');
         $this->db->from('course');

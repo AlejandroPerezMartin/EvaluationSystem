@@ -127,3 +127,9 @@ ALTER TABLE `exam_template` ADD INDEX `FKexam_templ119272` (user_id, course_id),
 ALTER TABLE `exam` ADD INDEX `FKexam403064` (user_id), ADD CONSTRAINT `FKexam403064` FOREIGN KEY (user_id) REFERENCES `user` (id);
 ALTER TABLE `answer` ADD INDEX `FKanswer303565` (exam_id), ADD CONSTRAINT `FKanswer303565` FOREIGN KEY (exam_id) REFERENCES `exam` (id);
 ALTER TABLE `exam` ADD INDEX `FKexam579426` (exam_template_id), ADD CONSTRAINT `FKexam579426` FOREIGN KEY (exam_template_id) REFERENCES `exam_template` (id);
+
+
+SELECT DISTINCT *
+FROM exam_template
+INNER JOIN question ON exam_template.id=question.exam_template_id
+INNER JOIN `option` ON question.id=option.question_id

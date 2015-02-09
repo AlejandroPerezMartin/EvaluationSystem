@@ -44,6 +44,24 @@ class Exam extends CI_Model
         return $query->result();
     }
 
+    public function get_exam_template_questions($exam_id)
+    {
+        if (!empty($exam_id)) {
+            $this->db->select('question.id AS id, statement, option.name AS option_name, type, max_points');
+            $this->db->from('exam_template');
+            $this->db->join('question', 'exam_template.id=question.exam_template_id', 'inner');
+            $this->db->join('option', 'question.id=option.question_id', 'inner');
+            $this->db->where('exam_template_id', $exam_id);
+            $this->db->distinct();
+
+            $query = $this->db->get();
+
+            return $query->result();
+        }
+        return false;
+
+    }
+
     public function is_user_enrolled_in_course($courseId)
     {
         $query = $this->db->get_where('user_course', array('course_id' => $courseId, 'user_id' => $this->authentication->get_logged_user_id()), 1);
