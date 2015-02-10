@@ -49,7 +49,7 @@ class Authentication extends CI_Model
 
     public function get_logged_user_id()
     {
-        return ($this->is_user_logged()) ? $this->session->userdata('logged_in') : '';
+        return ($this->is_user_logged()) ? $this->session->userdata('id') : '';
     }
 
     /*

@@ -48,32 +48,12 @@ CREATE TABLE `user_course` (
   course_id)
 );
 
-CREATE TABLE `ClosedQuestion_Question` (
-  Questionid int(10) NOT NULL,
-  PRIMARY KEY (Questionid)
-);
-
-CREATE TABLE `OpenQuestion_Question` (
-  Questionid int(10) NOT NULL,
-  PRIMARY KEY (Questionid)
-);
-
-CREATE TABLE `Option_ClosedQuestion` (
-  Optionid int(10) NOT NULL,
-  PRIMARY KEY (Optionid)
-);
-
 CREATE TABLE `option` (
   id          int(10) NOT NULL AUTO_INCREMENT,
   name        varchar(120) NOT NULL,
   is_correct  tinyint(1) NOT NULL,
   question_id int(10) NOT NULL,
   PRIMARY KEY (id)
-);
-
-CREATE TABLE `OpenQuestion_Option` (
-  Optionid int(10) NOT NULL,
-  PRIMARY KEY (Optionid)
 );
 
 CREATE TABLE `criteria` (
@@ -113,23 +93,13 @@ CREATE TABLE `exam` (
 );
 
 
-ALTER TABLE `user_course` ADD INDEX `is enrolled` (user_id), ADD CONSTRAINT `is enrolled` FOREIGN KEY (user_id) REFERENCES `user` (id);
-ALTER TABLE `user_course` ADD INDEX `has` (course_id), ADD CONSTRAINT `has` FOREIGN KEY (course_id) REFERENCES `course` (id);
-ALTER TABLE `ClosedQuestion_Question` ADD INDEX `FKClosedQues842729` (Questionid), ADD CONSTRAINT `FKClosedQues842729` FOREIGN KEY (Questionid) REFERENCES `question` (id);
-ALTER TABLE `OpenQuestion_Question` ADD INDEX `FKOpenQuesti452840` (Questionid), ADD CONSTRAINT `FKOpenQuesti452840` FOREIGN KEY (Questionid) REFERENCES `question` (id);
-ALTER TABLE `Option_ClosedQuestion` ADD INDEX `FKOption_Clo427395` (Optionid), ADD CONSTRAINT `FKOption_Clo427395` FOREIGN KEY (Optionid) REFERENCES `option` (id);
-ALTER TABLE `OpenQuestion_Option` ADD INDEX `belongTo` (Optionid), ADD CONSTRAINT `belongTo` FOREIGN KEY (Optionid) REFERENCES `option` (id);
-ALTER TABLE `criteria` ADD INDEX `FKcriteria471498` (question_id), ADD CONSTRAINT `FKcriteria471498` FOREIGN KEY (question_id) REFERENCES `question` (id);
-ALTER TABLE `option` ADD INDEX `FKoption715377` (question_id), ADD CONSTRAINT `FKoption715377` FOREIGN KEY (question_id) REFERENCES `question` (id);
-ALTER TABLE `question` ADD INDEX `FKquestion580824` (exam_template_id), ADD CONSTRAINT `FKquestion580824` FOREIGN KEY (exam_template_id) REFERENCES `exam_template` (id);
-ALTER TABLE `answer` ADD INDEX `FKanswer387579` (question_id), ADD CONSTRAINT `FKanswer387579` FOREIGN KEY (question_id) REFERENCES `question` (id);
-ALTER TABLE `exam_template` ADD INDEX `FKexam_templ119272` (user_id, course_id), ADD CONSTRAINT `FKexam_templ119272` FOREIGN KEY (user_id, course_id) REFERENCES `user_course` (user_id, course_id);
-ALTER TABLE `exam` ADD INDEX `FKexam403064` (user_id), ADD CONSTRAINT `FKexam403064` FOREIGN KEY (user_id) REFERENCES `user` (id);
-ALTER TABLE `answer` ADD INDEX `FKanswer303565` (exam_id), ADD CONSTRAINT `FKanswer303565` FOREIGN KEY (exam_id) REFERENCES `exam` (id);
-ALTER TABLE `exam` ADD INDEX `FKexam579426` (exam_template_id), ADD CONSTRAINT `FKexam579426` FOREIGN KEY (exam_template_id) REFERENCES `exam_template` (id);
-
-
-SELECT DISTINCT *
-FROM exam_template
-INNER JOIN question ON exam_template.id=question.exam_template_id
-INNER JOIN `option` ON question.id=option.question_id
+ALTER TABLE `user_course` ADD INDEX `is enrolled` (user_id), ADD CONSTRAINT `is enrolled` FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE CASCADE;
+ALTER TABLE `user_course` ADD INDEX `has` (course_id), ADD CONSTRAINT `has` FOREIGN KEY (course_id) REFERENCES `course` (id) ON DELETE CASCADE;
+ALTER TABLE `criteria` ADD INDEX `FKcriteria471498` (question_id), ADD CONSTRAINT `FKcriteria471498` FOREIGN KEY (question_id) REFERENCES `question` (id) ON DELETE CASCADE;
+ALTER TABLE `option` ADD INDEX `FKoption715377` (question_id), ADD CONSTRAINT `FKoption715377` FOREIGN KEY (question_id) REFERENCES `question` (id) ON DELETE CASCADE;
+ALTER TABLE `question` ADD INDEX `FKquestion580824` (exam_template_id), ADD CONSTRAINT `FKquestion580824` FOREIGN KEY (exam_template_id) REFERENCES `exam_template` (id) ON DELETE CASCADE;
+ALTER TABLE `answer` ADD INDEX `FKanswer387579` (question_id), ADD CONSTRAINT `FKanswer387579` FOREIGN KEY (question_id) REFERENCES `question` (id) ON DELETE CASCADE;
+ALTER TABLE `exam_template` ADD INDEX `FKexam_templ119272` (user_id, course_id), ADD CONSTRAINT `FKexam_templ119272` FOREIGN KEY (user_id, course_id) REFERENCES `user_course` (user_id, course_id) ON DELETE CASCADE;
+ALTER TABLE `exam` ADD INDEX `FKexam403064` (user_id), ADD CONSTRAINT `FKexam403064` FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE CASCADE;
+ALTER TABLE `answer` ADD INDEX `FKanswer303565` (exam_id), ADD CONSTRAINT `FKanswer303565` FOREIGN KEY (exam_id) REFERENCES `exam` (id) ON DELETE CASCADE;
+ALTER TABLE `exam` ADD INDEX `FKexam579426` (exam_template_id), ADD CONSTRAINT `FKexam579426` FOREIGN KEY (exam_template_id) REFERENCES `exam_template` (id) ON DELETE CASCADE;

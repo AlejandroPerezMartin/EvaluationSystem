@@ -42,8 +42,7 @@ class User extends CI_Model
     {
         $this->db->select('exam_template.id AS exam_template_id, exam_template.name AS exam_name, start_date, due_date, enabled, course.name AS course_name, acronym');
         $this->db->from('exam_template');
-        $this->db->join('course', 'exam_template.course_id=course.id', 'inner');
-        $this->db->where('user_id', $this->authentication->get_logged_user_id());
+        $this->db->join('course', 'exam_template.course_id=course.id and exam_template.user_id=' . $this->authentication->get_logged_user_id(), 'inner');
         $this->db->distinct();
         $query = $this->db->get();
 

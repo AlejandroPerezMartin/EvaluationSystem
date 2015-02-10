@@ -1,4 +1,6 @@
 
+<?php echo $this->session->flashdata('message'); ?>
+
 <?php if (!empty($exams)): ?>
 
     <div class="page-header">
@@ -38,7 +40,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a title="View exam" href="<?php echo base_url() . 'index.php/exams/view/' . $exam_data->exam_template_id ?>">View</a></li>
                 <li><a title="Edit exam" href="<?php echo base_url() . 'index.php/exams/edit/' . $exam_data->exam_template_id ?>">Edit</a></li>
-                <li><a href="#">Delete</a></li>
+                <li><a title="Remove exam" class="remove-exam" href="<?php echo base_url() . 'index.php/exams/remove/' . $exam_data->exam_template_id ?>">Remove</a></li>
               </ul>
             </div><!-- /btn-group -->
           </td>
@@ -53,6 +55,10 @@
 
 <?php else: ?>
 
+    <div class="page-header">
+        <h1>Dashboard</h1>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Information</h3>
@@ -63,3 +69,15 @@
     </div>
 
 <?php endif; ?>
+
+    <a href="<?php echo base_url() . 'index.php/exams/create' ?>" class="btn btn-primary btn-lg">Create exam <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+
+<script>
+
+  $('.remove-exam').on('click', function(evt){
+    if (!confirm('Are you sure you want to delete this exam?')){
+      evt.preventDefault();
+    }
+  });
+
+</script>

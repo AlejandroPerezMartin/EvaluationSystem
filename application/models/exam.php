@@ -42,9 +42,20 @@ class Exam extends CI_Model
         return false;
     }
 
+    public function remove_exam($exam_id)
+    {
+        $this->db->delete('exam_template', array('id' => $exam_id, 'user_id' => $this->authentication->get_logged_user_id()));
+    }
+
     public function get_exam_template($exam_id)
     {
         $query = $this->db->get_where('exam_template', array('id' => $exam_id), 1);
+        return $query->result();
+    }
+
+    public function exam_exists($exam_id)
+    {
+        $query = $this->db->get_where('exam_template', array('id' => $exam_id, 'user_id' => $this->authentication->get_logged_user_id()), 1);
         return $query->result();
     }
 
@@ -52,7 +63,7 @@ class Exam extends CI_Model
     {
         if (!empty($exam_id))
         {
-            $this->db->select('exam_template.user_id, exam_template.id AS exam_template_id, exam_template.name AS exam_name, start_date, due_date, enabled, duration, course_id, question.id AS id, statement, option.id AS option_id, option.name AS option_name, type, max_points');
+            $this->db->select('exam_template.user_id, exam_template.id AS exam_template_id, exam_template.name AS exam_name, start_date, due_date, enabled, duration, course_id, question.id AS question_id, statement, option.id AS option_id, option.name AS option_name, type, max_points');
             $this->db->from('exam_template');
             $this->db->join('question', 'exam_template.id=question.exam_template_id', 'inner');
             $this->db->join('option', 'question.id=option.question_id', 'inner');

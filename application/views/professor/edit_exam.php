@@ -2,10 +2,14 @@
 <?php echo $this->session->flashdata('message'); ?>
 
 <div class="page-header">
-    <h1><?php echo $exam[0]->exam_name; ?> <small>Edit exam</small></h1>
+    <h1><?php echo $exam_template->name; ?> <small>Edit exam</small></h1>
 </div>
 
-<form class="form-horizontal" id="edit-exam-form">
+<?php
+    $attributes = array('class' => 'form-horizontal', 'role' => 'form', 'id' => 'edit-exam-form');
+
+    echo form_open('exams/edit', $attributes);
+?>
 
 <h3>Configuration</h3>
 
@@ -14,7 +18,7 @@
    <label class="sr-only" for="exampleInputAmount">Exam name</label>
    <div class="input-group">
      <div class="input-group-addon">Exam name</div>
-     <input type="text" class="form-control" id="exam_name" placeholder="Name" value="<?php echo $exam[0]->exam_name; ?>">
+     <input type="text" class="form-control" id="exam_name" placeholder="Name" value="<?php echo $exam_template->name; ?>">
    </div>
   </div>
 </div>
@@ -24,7 +28,7 @@
    <label class="sr-only" for="exampleInputAmount">Start date</label>
    <div class="input-group">
      <div class="input-group-addon">Start date</div>
-     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam[0]->start_date; ?>">
+     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam_template->start_date; ?>">
    </div>
   </div>
 </div>
@@ -34,7 +38,7 @@
    <label class="sr-only" for="exampleInputAmount">Due date</label>
    <div class="input-group">
      <div class="input-group-addon">Due date</div>
-     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam[0]->due_date; ?>">
+     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam_template->due_date; ?>">
    </div>
    </div>
 </div>
@@ -44,7 +48,7 @@
    <label class="sr-only" for="exampleInputAmount">Duration</label>
    <div class="input-group">
      <div class="input-group-addon">Duration</div>
-     <input type="number" class="form-control" id="exampleInputAmount" step="1" min="0" max="120" placeholder="10 (minutes)" value="<?php echo $exam[0]->duration; ?>">
+     <input type="number" class="form-control" id="exampleInputAmount" step="1" min="0" max="120" placeholder="eg. 10 (minutes)" value="<?php echo $exam_template->duration; ?>">
    </div>
    </div>
 </div>
@@ -61,16 +65,21 @@
 
 <hr>
 
+<?php if (!empty($exam_questions)): ?>
+
+
+
 <h3>Questions</h3>
+
 <?php
 
 $i = 1;
-var_dump($exam);
+
 foreach ($exam as $exam_question => $question):
 
     if (!isset($previous_question_id) || $previous_question_id != $question->id):
         if ($i != 1): ?>
-                <button type="button" class="btn btn-primary btn-xs">Add option +</button>
+                <button type="button" class="btn btn-primary btn-xs add-option">Add option +</button>
               </div>
             </div>
         <?php endif; ?>
@@ -78,8 +87,8 @@ foreach ($exam as $exam_question => $question):
         <div class="panel panel-default">
           <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left"><?php echo "Question $i"; ?></h3>
-            <button type="button" class="btn btn-danger btn-xs pull-right" data-question-id="<?php echo $question->id; ?>">
-              <span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Remove
+            <button type="button" class="btn btn-danger btn-xs pull-right remove-question" data-question-id="<?php echo $question->id; ?>">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
             </button>
           </div>
           <div class="panel-body">
@@ -127,7 +136,9 @@ endforeach;
 ?>
     </div></div>
 
-</form>
+    <?php endif; ?>
+<?php echo form_close()?>
+
 
     <!-- Split button -->
     <div class="btn-group">
@@ -147,34 +158,37 @@ endforeach;
 
     $(document).ready(function(){
 
-        var removeOptions = [],
-            addOptions = [],
-            deletedQuestions = [];
+      var item = $('<div class="panel panel-default"> <div class="panel-heading clearfix"> <h3 class="panel-title pull-left">Question 1</h3> <button type="button" class="btn btn-danger btn-xs pull-right" data-question-id="1"> <span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Remove </button> </div> <div class="panel-body"> <div class="form-group"> <label for="inputPassword" class="col-sm-2 control-label">Statement</label> <div class="col-sm-10"> <input type="text" class="form-control" id="inputPassword" placeholder="Question statement" value="ladndjlas asnkd sadbasbdasbdasd "> </div> </div> <div class="form-group"> <label for="inputPassword" class="col-sm-2 control-label">Option</label> <div class="col-sm-10"> <div class="form-group row"> <div class="col-md-10"> <input type="text" class="form-control" name="" value="dj ndsjf dsfn" placeholder="Question statement"> </div> <div class="col-md-2"> <div class="checkbox"> <label> <input type="checkbox" name="correct-answer" value="1"> Correct &nbsp; <button type="button" class="btn btn-xs btn-default" aria-label="Remove option"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> </label> </div> </div> </div> </div> </div> </div> </div>');
 
-        $('.panel').each(function() {
-            var $wrapper = $('.multi-fields', this);
-            $(".add-field", $(this)).click(function(e) {
-                $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
-            });
-            $('.multi-field .remove-field', $wrapper).click(function() {
-                if ($('.multi-field', $wrapper).length > 1)
-                    $(this).parent('.multi-field').remove();
-            });
+        $('#add-closed-question').on('click', function(evt){
+            $('#edit-exam-form').append(item);
+            addListeners();
         });
 
-        $('#add-open-question').on('click', function(){
-            alert();
-        })
+        var controller = 'exams/action/remove_question';
+        base_url = <?php echo "'" . base_url() . 'index.php/' . "'"; ?>
 
-        $('#add-closed-question').on('click', function(){
-            var questionNumber = $('#edit-exam-form .panel-title').length,
-
-        })
-
-        function removeQuestion(questionId){
-
+        function addListeners(){
+          $('.remove-question').on('click', function(evt){
+              var self = $(this);
+              if (confirm('Are you sure you want to delete this question')) {
+                $.ajax({
+                    url: base_url + controller,
+                    type: 'POST',
+                    cache: false,
+                    data: { "question_id": $(this).data('question-id') },
+                })
+                .done(function(response) {
+                    self.closest('.panel').hide('slow', function(){
+                      $(this).remove();
+                    });
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+              }
+          });
         }
-
     });
 
 </script>

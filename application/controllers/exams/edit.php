@@ -29,14 +29,15 @@ class Edit extends CI_Controller
             redirect(base_url());
         }
 
-        $exam_request_result = $this->exam->get_exam_template_questions($exam_id);
-
-        if (!$exam_request_result)
+        if (!$this->exam->exam_exists($exam_id))
         {
             redirect(base_url());
         }
 
-        $exam_data = array('exam' => $exam_request_result);
+        $exam_template = $this->exam->get_exam_template($exam_id)[0];
+        $exam_questions = $this->exam->get_exam_template_questions($exam_id);
+
+        $exam_data = array('exam_questions' => $exam_questions, 'exam_template' => $exam_template);
 
         $data = array('page_title' => 'Edit exam', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
 
