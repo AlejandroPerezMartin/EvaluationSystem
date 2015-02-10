@@ -24,7 +24,7 @@
                         <select id="user-courses" class="form-control" name="user-courses">
                         <option value="">-- Select course --</option>
                         <?php foreach ($user_courses as $course):
-                            echo '<option value="' . $course->id . '" ' . set_select('user-courses', $course->id) . '>' . $course->name . ' (' . $course->acronym . ')</option>';
+                            echo '<option value="' . $course->course_id . '" ' . set_select('user-courses', $course->course_id) . '>' . $course->name . ' (' . $course->acronym . ')</option>';
                         endforeach ?>
                         </select>
                     </div>
@@ -56,7 +56,7 @@
 
         <script>
             var todayDate = new Date();
-            document.getElementById('startDate').value = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
+            document.getElementById('start-date').value = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
         </script>
 <!--
         <script>

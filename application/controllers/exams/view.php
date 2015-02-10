@@ -1,13 +1,13 @@
 <?php
 /**
-* Class and Function List:
-* Function list:
-* - __construct()
-* - index()
-* - _remap()
-* Classes list:
-* - View extends CI_Controller
-*/
+ * Class and Function List:
+ * Function list:
+ * - __construct()
+ * - index()
+ * - _remap()
+ * Classes list:
+ * - View extends CI_Controller
+ */
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class View extends CI_Controller
@@ -17,7 +17,7 @@ class View extends CI_Controller
     {
         parent::__construct();
         $this->load->library(array('parser', 'form_validation'));
-        $this->load->model(array('authentication', 'exam'));
+        $this->load->model(array('authentication', 'exam', 'menu_model'));
         $this->load->helper('form');
     }
 
@@ -29,16 +29,17 @@ class View extends CI_Controller
         }
 
         $exam_request_result = $this->exam->get_exam_template($exam_id);
-        $exam_data = ($exam_request_result) ? $exam_request_result[0] : NULL;
+        $exam_data = ($exam_request_result) ? $exam_request_result[0] : null;
 
-        if ($exam_data == NULL) {
+        if ($exam_data == null)
+        {
             redirect(base_url());
         }
 
-        $data = array('page_title' => 'Create exam', 'page_description' => 'Description goes here!');
+        $data = array('page_title' => 'Create exam', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
 
         $this->parser->parse('header', $data);
-        $this->parser->parse('exam_view', get_object_vars($exam_data));
+        $this->load->view('exam_view', get_object_vars($exam_data));
         $this->load->view('footer');
     }
 

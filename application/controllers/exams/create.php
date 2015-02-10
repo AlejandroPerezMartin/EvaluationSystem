@@ -17,7 +17,7 @@ class Create extends CI_Controller
     {
         parent::__construct();
         $this->load->library(array('parser', 'form_validation'));
-        $this->load->model(array('authentication', 'exam', 'user'));
+        $this->load->model(array('authentication', 'exam', 'user', 'menu_model'));
         $this->load->helper('form');
     }
 
@@ -28,14 +28,13 @@ class Create extends CI_Controller
 
     public function index()
     {
-
         // If user is not a professor or its not logged, redirect him to main page
         if (!$this->authentication->is_user_logged() || $this->authentication->get_logged_user_role() != 1)
         {
             redirect(base_url());
         }
 
-        $data = array('page_title' => 'Create exam', 'page_description' => 'Description goes here!');
+        $data = array('page_title' => 'Create exam', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
         $courses_data = array('user_courses' => $this->user->get_user_enrolled_courses());
 
         if ($this->input->post('submit_create_exam'))
@@ -55,7 +54,7 @@ class Create extends CI_Controller
                 {
                     $success_message = '<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> The exam was successfully created</div>';
                     $this->session->set_flashdata('message', $success_message);
-                    redirect(base_url() . 'index.php/exams/view/' . $created_exam_id);
+                    redirect(base_url() . 'index.php/exams/edit/' . $created_exam_id);
                 } else
                 {
                     $info = array('message' => '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> There was an error creating the exam. Please try again.</div>');

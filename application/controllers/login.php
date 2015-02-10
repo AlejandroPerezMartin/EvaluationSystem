@@ -41,21 +41,7 @@ class Login extends CI_Controller
             {
                 if ($this->authentication->process_login($this->input->post('email'), $this->input->post('password')))
                 {
-                    $user_role = $this->user->get_logged_user_role();
-                    switch ($user_role) {
-                        case '0':
-                            redirect(base_url('index.php/admin'));
-                            break;
-                        case '1':
-                            redirect(base_url('index.php/admin'));
-                            break;
-                        case '2':
-                            redirect(base_url('index.php/admin'));
-                            break;
-                        default:
-                            echo "There was an error loading the interface";
-                            break;
-                    }
+                    redirect(base_url());
                 } else
                 {
                     $sub_data = array('login_failed' => 'Invalid email or password');

@@ -4,13 +4,12 @@
  * Function list:
  * - __construct()
  * - index()
- * - _remap()
  * Classes list:
- * - Edit extends CI_Controller
+ * - Dashboard extends CI_Controller
  */
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Edit extends CI_Controller
+class Dashboard extends CI_Controller
 {
 
     public function __construct()
@@ -21,39 +20,28 @@ class Edit extends CI_Controller
         $this->load->helper('form');
     }
 
-    public function index($exam_id)
+    public function index()
     {
         // Only editable by professors
-        if (empty($exam_id) || !$this->authentication->is_user_logged() || $this->authentication->get_logged_user_role() != 1)
+        if (!$this->authentication->is_user_logged())
+        {
+            redirect(base_url() . 'index.php/login');
+        }
+
+        if ($this->authentication->get_logged_user_role() != 1)
         {
             redirect(base_url());
         }
 
-        $exam_request_result = $this->exam->get_exam_template_questions($exam_id);
+        $exam_request_result = $this->user->get_user_created_exams();
 
-        if (!$exam_request_result)
-        {
-            redirect(base_url());
-        }
-
-        $exam_data = array('exam' => $exam_request_result);
+        $exam_data = array('exams' => $exam_request_result);
 
         $data = array('page_title' => 'Edit exam', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
 
         $this->parser->parse('header', $data);
-        $this->load->view('professor/edit_exam', $exam_data);
+        $this->load->view('professor/dashboard', $exam_data);
         $this->load->view('footer');
-    }
-
-    public function _remap($method, $args)
-    {
-        if (method_exists($this, $method))
-        {
-            $this->$method($args);
-        } else
-        {
-            $this->index($method, $args);
-        }
     }
 }
 ?>

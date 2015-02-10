@@ -39,9 +39,7 @@
             </div> <!-- /.navbar-header -->
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#exams">My exams</a></li>
-                    <li><a href="#profile">My profile</a></li>
-                    <li><a href="<?php echo base_url() . 'index.php/logout'; ?>">Logout</a></li>
+                    <?php if (isset($menu)) echo $menu; ?>
                 </ul>
             </div> <!-- /#navbar -->
         </div> <!-- /.container -->
