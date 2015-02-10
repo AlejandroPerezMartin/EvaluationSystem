@@ -5,7 +5,7 @@
 
         <footer>
             <p class="pull-right"><a href="#">Back to top</a></p>
-            <p>© <?php echo date('Y'); ?> Evaluation System. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+            <p>© <?php echo date('Y'); ?> Evaluation System · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
         </footer>
         <?php endif; ?>
 

@@ -29,7 +29,7 @@ class View extends CI_Controller
         }
 
         $exam_request_result = $this->exam->get_exam_template($exam_id);
-        $exam_data = ($exam_request_result) ? $exam_request_result[0] : null;
+        $exam_data = ($exam_request_result) ? array('exam' => $exam_request_result[0]) : null;
 
         if ($exam_data == null)
         {
@@ -39,7 +39,7 @@ class View extends CI_Controller
         $data = array('page_title' => 'Create exam', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
 
         $this->parser->parse('header', $data);
-        $this->load->view('exam_view', get_object_vars($exam_data));
+        $this->load->view('exam_view', $exam_data);
         $this->load->view('footer');
     }
 

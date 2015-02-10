@@ -1,27 +1,86 @@
 
 <?php echo $this->session->flashdata('message'); ?>
 
-<h1>Exam name <small>Edit exam</small></h1>
+<div class="page-header">
+    <h1><?php echo $exam[0]->exam_name; ?> <small>Edit exam</small></h1>
+</div>
 
-<h2>NOT FINISHED</h2>
 <form class="form-horizontal" id="edit-exam-form">
 
+<h3>Configuration</h3>
+
+<div class="form-group">
+  <div class="col-xs-4">
+   <label class="sr-only" for="exampleInputAmount">Exam name</label>
+   <div class="input-group">
+     <div class="input-group-addon">Exam name</div>
+     <input type="text" class="form-control" id="exam_name" placeholder="Name" value="<?php echo $exam[0]->exam_name; ?>">
+   </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-xs-3">
+   <label class="sr-only" for="exampleInputAmount">Start date</label>
+   <div class="input-group">
+     <div class="input-group-addon">Start date</div>
+     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam[0]->start_date; ?>">
+   </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-xs-3">
+   <label class="sr-only" for="exampleInputAmount">Due date</label>
+   <div class="input-group">
+     <div class="input-group-addon">Due date</div>
+     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam[0]->due_date; ?>">
+   </div>
+   </div>
+</div>
+
+<div class="form-group">
+  <div class="col-xs-3">
+   <label class="sr-only" for="exampleInputAmount">Duration</label>
+   <div class="input-group">
+     <div class="input-group-addon">Duration</div>
+     <input type="number" class="form-control" id="exampleInputAmount" step="1" min="0" max="120" placeholder="10 (minutes)" value="<?php echo $exam[0]->duration; ?>">
+   </div>
+   </div>
+</div>
+
+<div class="form-group">
+  <div class="col-xs-4">
+   <div class="checkbox">
+     <label>
+       <input type="checkbox" id="exam_enabled"> Enable exam
+     </label>
+   </div>
+   </div>
+</div>
+
+<hr>
+
+<h3>Questions</h3>
 <?php
 
 $i = 1;
-
+var_dump($exam);
 foreach ($exam as $exam_question => $question):
 
     if (!isset($previous_question_id) || $previous_question_id != $question->id):
-        if ($i != 1) {
-            echo '<button type="button" class="btn btn-primary btn-xs">Add option</button>';
-            echo '<button type="button" class="btn btn-danger btn-xs pull-right" data-question-id="' . $question->id . '">Delete question</button>';
-            echo '</div></div>';
-        }
-?>
+        if ($i != 1): ?>
+                <button type="button" class="btn btn-primary btn-xs">Add option +</button>
+              </div>
+            </div>
+        <?php endif; ?>
+
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><?php echo "Question $i"; ?></h3>
+          <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left"><?php echo "Question $i"; ?></h3>
+            <button type="button" class="btn btn-danger btn-xs pull-right" data-question-id="<?php echo $question->id; ?>">
+              <span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Remove
+            </button>
           </div>
           <div class="panel-body">
               <div class="form-group">
@@ -41,9 +100,21 @@ foreach ($exam as $exam_question => $question):
     <div class="form-group">
       <label for="inputPassword" class="col-sm-2 control-label">Option</label>
       <div class="col-sm-10">
+        <div class="form-group row">
+          <div class="col-md-10">
           <input type="text" class="form-control" name="" value="<?php echo $question->option_name; ?>" placeholder="Question statement">
-          <input type="checkbox" name="correct-answer" value="1"> Correct
-          <a href="#" title="Delete option" class="delete-option text-danger">Delete</a>
+          </div>
+          <div class="col-md-2">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="correct-answer" value="1"> Correct &nbsp;
+                <button type="button" class="btn btn-xs btn-default" aria-label="Remove option">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
