@@ -72,8 +72,20 @@ class Exam extends CI_Model
             $this->db->distinct();
 
             $query = $this->db->get();
+            $result = $query->result();
 
-            return $query->result();
+            $exam_questions = array();
+            foreach ($result as $key => $value) {
+                if (!isset($previous_question_id) || $previous_question_id != $value->question_id) {
+                    $exam_questions[$value->question_id] = array();
+                    $exam_questions[$value->question_id]['statement'] = $value->statement;
+                    $exam_questions[$value->question_id]['options'] = array();
+                }
+                    $exam_questions[$value->question_id]['options'][$value->option_id] = $value->option_name;
+                $previous_question_id = $value->question_id;
+            }
+
+            return $exam_questions;
         }
         return false;
     }
