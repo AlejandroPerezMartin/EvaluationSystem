@@ -183,7 +183,6 @@
                 data: { "exam_template_id": $(this).data('exam-template-id') },
             })
             .done(function(response) {
-              console.log(response);
                 $('#edit-exam-form').append(item);
                 addListeners();
                 addOptionsListeners();
@@ -206,7 +205,6 @@
                     data: { "question_id": $(this).data('question-id') },
                 })
                 .done(function(response) {
-                  console.log(response);
                     self.closest('.panel').hide('slow', function(){
                       $(this).remove();
                     });
@@ -230,7 +228,6 @@
                     data: { "option_id": $(this).data('option-id') },
                 })
                 .done(function(response) {
-                  console.log(response);
                     self.closest('.option-wrapper').hide('fast', function(){
                       $(this).remove();
                     });
@@ -254,7 +251,6 @@
                     data: { 'question_id' : $(this).data('question-id') },
                 })
                 .done(function(response) {
-                    console.log(response);
                     self.prev('.options-wrapper').append(newOptionTemplate);
                 })
                 .fail(function(e) {

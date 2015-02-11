@@ -5,9 +5,10 @@
  * - __construct()
  * - create_exam()
  * - enable_exam()
+ * - remove_exam()
  * - get_exam_template()
+ * - exam_exists()
  * - get_exam_template_questions()
- * - is_user_enrolled_in_course()
  * Classes list:
  * - Exam extends CI_Model
  */
@@ -75,8 +76,10 @@ class Exam extends CI_Model
             $result = $query->result();
 
             $exam_questions = array();
-            foreach ($result as $key => $value) {
-                if (!isset($previous_question_id) || $previous_question_id != $value->question_id) {
+            foreach ($result as $key => $value)
+            {
+                if (!isset($previous_question_id) || $previous_question_id != $value->question_id)
+                {
                     $exam_questions[$value->question_id] = array();
                     $exam_questions[$value->question_id]['statement'] = $value->statement;
                     $exam_questions[$value->question_id]['type'] = $value->type;
@@ -89,12 +92,6 @@ class Exam extends CI_Model
             return $exam_questions;
         }
         return false;
-    }
-
-    public function is_user_enrolled_in_course($courseId)
-    {
-        $query = $this->db->get_where('user_course', array('course_id' => $courseId, 'user_id' => $this->authentication->get_logged_user_id()), 1);
-        return !empty($query->result());
     }
 }
 ?>

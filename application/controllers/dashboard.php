@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         $this->load->library(array('parser', 'form_validation'));
-        $this->load->model(array('authentication', 'exam', 'user', 'menu_model'));
+        $this->load->model(array('authentication', 'user', 'course', 'menu_model'));
         $this->load->helper('form');
     }
 
@@ -44,7 +44,7 @@ class Dashboard extends CI_Controller
         // User is admin
         else if ($this->authentication->get_logged_user_role() == 0)
         {
-            $all_courses = $this->user->get_all_courses();
+            $all_courses = $this->course->get_all_courses();
 
             $courses_data = array('courses' => $all_courses);
 

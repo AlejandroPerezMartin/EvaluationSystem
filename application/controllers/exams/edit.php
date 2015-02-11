@@ -17,19 +17,14 @@ class Edit extends CI_Controller
     {
         parent::__construct();
         $this->load->library(array('parser', 'form_validation'));
-        $this->load->model(array('authentication', 'exam', 'user', 'menu_model'));
+        $this->load->model(array('authentication', 'exam', 'menu_model'));
         $this->load->helper('form');
     }
 
     public function index($exam_id)
     {
         // Only editable by professors
-        if (empty($exam_id) || !$this->authentication->is_user_logged() || $this->authentication->get_logged_user_role() != 1)
-        {
-            redirect(base_url());
-        }
-
-        if (!$this->exam->exam_exists($exam_id))
+        if (empty($exam_id) || !$this->authentication->is_user_logged() || $this->authentication->get_logged_user_role() != 1 || !$this->exam->exam_exists($exam_id))
         {
             redirect(base_url());
         }

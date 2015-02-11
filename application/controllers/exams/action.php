@@ -15,7 +15,7 @@ class Action extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('authentication', 'exam', 'user'));
+        $this->load->model(array('authentication'));
     }
 
     public function add_option()

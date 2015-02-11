@@ -14,7 +14,7 @@ class Menu_Model extends CI_Model
     {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->model(array('authentication', 'user'));
+        $this->load->model(array('authentication'));
     }
     private function _create_menu($menu, $username)
     {
@@ -26,7 +26,7 @@ class Menu_Model extends CI_Model
     }
     public function menu_top()
     {
-        $username = $this->user->get_logged_user_name();
+        $username = $this->authentication->get_logged_user_name();
         $menu_logged = array(
             array(
                 'title'       => 'Dashboard',
