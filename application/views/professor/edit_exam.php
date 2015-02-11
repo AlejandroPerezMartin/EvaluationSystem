@@ -15,40 +15,40 @@
 
 <div class="form-group">
   <div class="col-xs-4">
-   <label class="sr-only" for="exampleInputAmount">Exam name</label>
+   <label class="sr-only" for="exam_name">Exam name</label>
    <div class="input-group">
      <div class="input-group-addon">Exam name</div>
-     <input type="text" class="form-control" id="exam_name" placeholder="Name" value="<?php echo $exam_template->name; ?>">
+     <input type="text" class="form-control" name="exam_name" placeholder="Name" value="<?php echo $exam_template->name; ?>">
    </div>
   </div>
 </div>
 
 <div class="form-group">
   <div class="col-xs-3">
-   <label class="sr-only" for="exampleInputAmount">Start date</label>
+   <label class="sr-only" for="start_date">Start date</label>
    <div class="input-group">
      <div class="input-group-addon">Start date</div>
-     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam_template->start_date; ?>">
+     <input type="date" class="form-control" name="start_date" placeholder="YYYY-MM-DD" value="<?php echo $exam_template->start_date; ?>">
    </div>
   </div>
 </div>
 
 <div class="form-group">
   <div class="col-xs-3">
-   <label class="sr-only" for="exampleInputAmount">Due date</label>
+   <label class="sr-only" for="due_date">Due date</label>
    <div class="input-group">
      <div class="input-group-addon">Due date</div>
-     <input type="date" class="form-control" id="exampleInputAmount" placeholder="YYYY-MM-DD" value="<?php echo $exam_template->due_date; ?>">
+     <input type="date" class="form-control" name="due_date" placeholder="YYYY-MM-DD" value="<?php echo $exam_template->due_date; ?>">
    </div>
    </div>
 </div>
 
 <div class="form-group">
   <div class="col-xs-3">
-   <label class="sr-only" for="exampleInputAmount">Duration</label>
+   <label class="sr-only" for="duration">Duration</label>
    <div class="input-group">
      <div class="input-group-addon">Duration</div>
-     <input type="number" class="form-control" id="exampleInputAmount" step="1" min="0" max="120" placeholder="eg. 10 (minutes)" value="<?php echo $exam_template->duration; ?>">
+     <input type="number" class="form-control" name="duration" step="1" min="0" max="120" placeholder="eg. 10 (minutes)" value="<?php echo $exam_template->duration; ?>">
    </div>
    </div>
 </div>

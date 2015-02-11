@@ -84,6 +84,37 @@ class User extends CI_Model
         return ($result) ? $result->name : "guest";
     }
 
+    public function get_all_courses()
+    {
+        if ($this->is_logged_user_admin()) {
+            $query = $this->db->get('course');
+            return $query->result();
+        }
+        return false;
+    }
+
+    public function get_users_in_course($course_id)
+    {
+        $query = $this->db->query('SELECT `user_id`, `course_id`, `name` FROM (`user_course`, `user`) WHERE `user_course`.`user_id` = `id` AND `user`.`role` = 2 AND `user_course`.`course_id` = ? ORDER BY (`id`)', array($course_id));
+        return $query->result();
+    }
+
+    public function get_all_users_not_in_course($course_id)
+    {
+        $query = $this->db->query('SELECT DISTINCT `user_id`, `course_id`, `name` FROM (`user_course`, `user`) WHERE `user`.`id`=`user_course`.`user_id` AND `user`.`role` = 2 AND `user_course`.`course_id` != ? AND `user_course`.`user_id` NOT IN (`user_id`) GROUP BY (`user_id`) ORDER BY (`id`)', array($course_id));
+        return $query->result();
+    }
+
+    public function enroll_student_in_course($student_id, $course_id)
+    {
+        $this->db->insert('user_course', array('user_id' => $student_id, 'course_id' => $course_id));
+    }
+
+    public function unenroll_student_from_course($student_id, $course_id)
+    {
+        $this->db->delete('user_course', array('user_id' => $student_id, 'course_id' => $course_id));
+    }
+
     public function is_user_enrolled_in_course($courseId)
     {
         $query = $this->db->get_where('user_course', array('course_id' => $courseId, 'user_id' => $this->authentication->get_logged_user_id()), 1);

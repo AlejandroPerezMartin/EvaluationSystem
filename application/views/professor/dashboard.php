@@ -74,8 +74,8 @@
 
 <script>
 
-  $('.remove-exam').on('click', function(evt){
-    if (!confirm('Are you sure you want to delete this exam?')){
+  $('.remove-exam').on('click', function(evt) {
+    if (!confirm('Are you sure you want to delete this exam?')) {
       evt.preventDefault();
     }
   });

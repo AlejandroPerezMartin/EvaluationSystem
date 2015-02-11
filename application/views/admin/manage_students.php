@@ -1,0 +1,82 @@
+<?php if(!empty($users_in_course) && !empty($users_not_in_course)): ?>
+<div class="page-header">
+    <h1>Enroll/uneroll students</h1>
+</div>
+
+<div class="row">
+
+  <div class="col-xs-6 col-md-5">
+    <select name="users_not_enrolled" id="users_not_enrolled" multiple size="10" class="form-control">
+        <?php foreach ($users_not_in_course as $key => $user): ?>
+            <option value="<?php echo $user->user_id; ?>"><?php echo '(' . $user->user_id . ') ' . $user->name; ?></option>
+        <? endforeach; ?>
+    </select>
+  </div>
+
+  <div class="col-xs-4 col-md-2 text-center">
+    <p>
+        <button class="btn btn-primary" id="enroll" type="submit">
+            Enrol <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>
+    </p>
+    <p>
+        <button class="btn btn-primary" id="unenroll" type="submit">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Unenroll
+        </button>
+    </p>
+  </div>
+
+  <div class="col-xs-6 col-md-5">
+      <select name="users_enrolled" id="users_enrolled" multiple size="10" class="form-control">
+      <?php foreach ($users_in_course as $key => $user): ?>
+          <option value="<?php echo $user->user_id; ?>"><?php echo '(' . $user->user_id . ') ' . $user->name; ?></option>
+      <? endforeach; ?>
+      </select>
+  </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+
+        var controller = 'admin/manage/',
+            base_url = <?php echo "'" . base_url() . 'index.php/' . "'"; ?>
+
+        $('#enroll').on('click', function(){
+            $.ajax({
+                url: base_url + controller + 'enroll',
+                type: 'POST',
+                cache: false,
+                data: { "user_id": $('#users_not_enrolled').val(), "course_id": '<?php echo $users_in_course[0]->course_id; ?>' },
+            })
+            .done(function(response) {
+                location.reload();
+            })
+            .fail(function(e) {
+                console.log(e);
+            });
+        });
+
+        $('#unenroll').on('click', function(){
+            $.ajax({
+                url: base_url + controller + 'unenroll',
+                type: 'POST',
+                cache: false,
+                data: { "user_id": $('#users_enrolled').val(), "course_id": '<?php echo $users_in_course[0]->course_id; ?>' },
+            })
+            .done(function(response) {
+                location.reload();
+            })
+            .fail(function(e) {
+                console.log(e);
+            });
+        });
+
+    });
+
+</script>
+<?php else:
+        redirect(base_url());
+?>
+<?php endif; ?>

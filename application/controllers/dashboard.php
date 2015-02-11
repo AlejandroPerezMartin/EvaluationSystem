@@ -28,20 +28,37 @@ class Dashboard extends CI_Controller
             redirect(base_url() . 'index.php/login');
         }
 
-        if ($this->authentication->get_logged_user_role() != 1)
+        // User is professor
+        if ($this->authentication->get_logged_user_role() == 1)
+        {
+            $professor_created_exams = $this->user->get_user_created_exams();
+
+            $courses_data = array('exams' => $professor_created_exams);
+
+            $data = array('page_title' => 'Dashboard', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
+
+            $this->parser->parse('header', $data);
+            $this->load->view('professor/dashboard', $courses_data);
+            $this->load->view('footer');
+        }
+        // User is admin
+        else if ($this->authentication->get_logged_user_role() == 0)
+        {
+            $all_courses = $this->user->get_all_courses();
+
+            $courses_data = array('courses' => $all_courses);
+
+            $data = array('page_title' => 'Dashboard', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
+
+            $this->parser->parse('header', $data);
+            $this->load->view('admin/dashboard', $courses_data);
+            $this->load->view('footer');
+        }
+        else
         {
             redirect(base_url());
         }
 
-        $exam_request_result = $this->user->get_user_created_exams();
-
-        $exam_data = array('exams' => $exam_request_result);
-
-        $data = array('page_title' => 'Edit exam', 'page_description' => 'Description goes here!', 'menu' => $this->menu_model->menu_top());
-
-        $this->parser->parse('header', $data);
-        $this->load->view('professor/dashboard', $exam_data);
-        $this->load->view('footer');
     }
 }
 ?>
