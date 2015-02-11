@@ -79,9 +79,10 @@ class Exam extends CI_Model
                 if (!isset($previous_question_id) || $previous_question_id != $value->question_id) {
                     $exam_questions[$value->question_id] = array();
                     $exam_questions[$value->question_id]['statement'] = $value->statement;
+                    $exam_questions[$value->question_id]['type'] = $value->type;
                     $exam_questions[$value->question_id]['options'] = array();
                 }
-                    $exam_questions[$value->question_id]['options'][$value->option_id] = $value->option_name;
+                $exam_questions[$value->question_id]['options'][$value->option_id] = $value->option_name;
                 $previous_question_id = $value->question_id;
             }
 

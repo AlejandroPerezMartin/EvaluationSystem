@@ -67,8 +67,6 @@
 
 <h3>Questions</h3>
 
-<?php if (!empty($exam_questions)): ?>
-
 <?php
   $i = 1;
   foreach ($exam_questions as $question_id => $question): ?>
@@ -78,11 +76,23 @@
           <h3 class="panel-title pull-left"><?php echo 'Question ' . $i; ?></h3>
           <button type="button" class="btn btn-danger btn-xs pull-right remove-question" data-question-id="<?php echo $question_id; ?>">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button>
-          </div>
+        </div>
         <div class="panel-body">
-          <div class="options-wrapper">
-      <?php foreach ($question['options'] as $option_id => $option_name): ?>
 
+          <div class="form-group option-wrapper">
+                <label for="statement-<?php echo $question_id; ?>" class="col-sm-2 control-label">Statement</label>
+                <div class="col-sm-10">
+                  <div class="form-group row">
+                    <div class="col-md-10">
+                    <input type="text" class="form-control" name="statement-<?php echo $question_id; ?>" value="<?php echo $question['statement']; ?>" placeholder="Statement">
+                    </div>
+                  </div>
+                </div>
+          </div>
+          <div class="options-wrapper">
+
+      <?php if ($question['type'] == 0): ?>
+      <?php foreach ($question['options'] as $option_id => $option_name): ?>
           <div class="form-group option-wrapper">
                 <label for="op-<?php echo $option_id; ?>-name" class="col-sm-2 control-label">Option</label>
                 <div class="col-sm-10">
@@ -105,6 +115,24 @@
           </div>
 
       <?php endforeach ?>
+      <?php else: ?>
+        <?php foreach ($question['options'] as $option_id => $option_name): ?>
+        <div class="form-group option-wrapper">
+              <label for="op-<?php echo $option_id; ?>-name" class="col-sm-2 control-label">Criteria</label>
+              <div class="col-sm-10">
+                <div class="form-group row">
+                  <div class="col-md-10">
+                  <input type="text" class="form-control" name="op-<?php echo $option_id; ?>-criteria-name" value="<?php echo $option_name; ?>" placeholder="Criteria name">
+                  </div>
+                  <div class="col-md-2">
+                      <input type="number" step="0.25" min="0" class="form-control" name="op-<?php echo $option_id; ?>-criteria-points" placeholder="Number">
+                  </div>
+                </div>
+              </div>
+        </div>
+        <?php endforeach ?>
+      <?php endif ?>
+
         </div>
           <button type="button" class="btn btn-primary btn-xs add-option" data-question-id="<?php echo $question_id ?>">Add option +</button>
         </div>
@@ -114,7 +142,6 @@
       endforeach;
     ?>
 
-<?php endif; ?>
 
 <?php echo form_close()?>
 
@@ -129,7 +156,7 @@
       </button>
       <ul class="dropdown-menu" role="menu">
         <li><a id="add-open-question" href="#">Open question</a></li>
-        <li><a id="add-closed-question" href="#">Closed question</a></li>
+        <li><a id="add-closed-question" href="#" data-exam-template-id="<?php echo $exam_template->id ?>">Closed question</a></li>
       </ul>
     </div>
     <a href="<?php echo base_url(); ?>" class="btn btn-default btn-lg">Cancel</a>
@@ -139,19 +166,34 @@
 
     $(document).ready(function(){
 
-      var item = $('<div class="panel panel-default"> <div class="panel-heading clearfix"> <h3 class="panel-title pull-left">Question 1</h3> <button type="button" class="btn btn-danger btn-xs pull-right remove-question" data-question-id="2"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove </button> </div> <div class="panel-body"> <div class="form-group"> <label for="inputPassword" class="col-sm-2 control-label">Statement</label> <div class="col-sm-10"> <input type="text" class="form-control" id="inputPassword" placeholder="Question statement" value="pregunta 2"> </div> </div> <div class="form-group"> <label for="inputPassword" class="col-sm-2 control-label">Option</label> <div class="col-sm-10"> <div class="form-group row"> <div class="col-md-10"> <input type="text" class="form-control" name="" value="respuesta 1" placeholder="Question statement"> </div> <div class="col-md-2"> <div class="checkbox"> <label> <input type="checkbox" name="correct-answer" value="1"> Correct &nbsp; <button type="button" class="btn btn-xs btn-default" aria-label="Remove option"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> </label> </div> </div> </div> </div> </div> </div></div>');
+      var item = $('<div class="panel panel-default"> <div class="panel-heading clearfix"> <h3 class="panel-title pull-left">Question 1</h3> <button type="button" class="btn btn-danger btn-xs pull-right remove-question" data-question-id=""> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button> </div> <div class="panel-body"> <div class="form-group option-wrapper"> <label for="" class="col-sm-2 control-label">Statement</label> <div class="col-sm-10"> <div class="form-group row"> <div class="col-md-10"> <input type="text" class="form-control" name="" value="" placeholder="Statement"> </div> </div> </div> </div> <div class="options-wrapper"> </div> <button type="button" class="btn btn-primary btn-xs add-option" data-question-id="">Add option +</button> </div> </div>');
+
+      var controller = 'exams/action/',
+          base_url = <?php echo "'" . base_url() . 'index.php/' . "'"; ?>
+
+      addListeners();
+      addOptionsListeners();
+      addOptionsListeners2();
 
         $('#add-closed-question').on('click', function(evt){
-            $('#edit-exam-form').append(item);
+            $.ajax({
+                url: base_url + controller + 'add_closed_question',
+                type: 'POST',
+                cache: false,
+                data: { "exam_template_id": $(this).data('exam-template-id') },
+            })
+            .done(function(response) {
+              console.log(response);
+                $('#edit-exam-form').append(item);
+                addListeners();
+                addOptionsListeners();
+                addOptionsListeners2();
+            })
+            .fail(function(e) {
+                console.log(e);
+            });
             addListeners();
         });
-
-        addListeners();
-        addOptionsListeners();
-        addOptionsListeners2();
-
-        var controller = 'exams/action/';
-        base_url = <?php echo "'" . base_url() . 'index.php/' . "'"; ?>
 
         function addListeners(){
           $('.remove-question').on('click', function(evt){
@@ -189,7 +231,7 @@
                 })
                 .done(function(response) {
                   console.log(response);
-                    self.closest('.option-wrapper').hide('slow', function(){
+                    self.closest('.option-wrapper').hide('fast', function(){
                       $(this).remove();
                     });
                 })
@@ -200,7 +242,7 @@
           });
         }
 
-        var newOptionTemplate = $('<div class="form-group option-wrapper"><label for="" class="col-sm-2 control-label">Option</label> <div class="col-sm-10"> <div class="form-group row"> <div class="col-md-10"> <input type="text" class="form-control" name="" value="" placeholder="Option name"> </div> <div class="col-md-2"> <div class="checkbox"> <label> <input type="checkbox" name="op-<?php echo $option_id; ?>-correct" value="1"> Correct &nbsp; </label> <button type="button" class="btn btn-xs btn-default remove-option" aria-label="Remove option" data-option-id=""> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> </div> </div> </div> </div> </div>');
+        var newOptionTemplate = $('<div class="form-group option-wrapper"><label for="" class="col-sm-2 control-label">Option</label> <div class="col-sm-10"> <div class="form-group row"> <div class="col-md-10"> <input type="text" class="form-control" name="" value="" placeholder="Option name"> </div> <div class="col-md-2"> <div class="checkbox"> <label> <input type="checkbox" name="" value="1"> Correct &nbsp; </label> <button type="button" class="btn btn-xs btn-default remove-option" aria-label="Remove option" data-option-id=""> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> </div> </div> </div> </div> </div>');
 
         function addOptionsListeners2(){
           $('.add-option').on('click', function(evt){
@@ -212,8 +254,8 @@
                     data: { 'question_id' : $(this).data('question-id') },
                 })
                 .done(function(response) {
-                  console.log(response);
-                  self.prev('.options-wrapper').append(newOptionTemplate);
+                    console.log(response);
+                    self.prev('.options-wrapper').append(newOptionTemplate);
                 })
                 .fail(function(e) {
                     console.log(e);
