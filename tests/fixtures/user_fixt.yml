@@ -2,5 +2,6 @@
     id: 1
     name: 'Alejandro'
     email: 'user@email.com'
-    password: 'a6ec50b700e52e5e1107925bb8fd91ee5210018b'
+    age: ''
     role: 0
+    password: 'a6ec50b700e52e5e1107925bb8fd91ee5210018b'

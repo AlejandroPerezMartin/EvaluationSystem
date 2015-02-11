@@ -1,0 +1,9 @@
+1:
+    id: 1
+    name: 'Exam Name'
+    start_date: ''
+    due_date: ''
+    duration: ''
+    enabled: 0
+    user_id: 1
+    course_id: 1
