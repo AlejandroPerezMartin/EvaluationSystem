@@ -101,7 +101,7 @@ class User extends CI_Model
 
     public function get_all_users_not_in_course($course_id)
     {
-        $query = $this->db->query('SELECT DISTINCT `user_id`, `course_id`, `name` FROM (`user_course`, `user`) WHERE `user`.`id`=`user_course`.`user_id` AND `user`.`role` = 2 AND `user_course`.`course_id` != ? AND `user_course`.`user_id` NOT IN (`user_id`) GROUP BY (`user_id`) ORDER BY (`id`)', array($course_id));
+        $query = $this->db->query('SELECT * FROM `user` WHERE id NOT IN (SELECT user_id FROM user_course WHERE course_id=?) AND role=2', array($course_id));
         return $query->result();
     }
 

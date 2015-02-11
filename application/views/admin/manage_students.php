@@ -1,4 +1,4 @@
-<?php if(!empty($users_in_course) && !empty($users_not_in_course)): ?>
+
 <div class="page-header">
     <h1>Enroll/uneroll students</h1>
 </div>
@@ -8,7 +8,7 @@
   <div class="col-xs-6 col-md-5">
     <select name="users_not_enrolled" id="users_not_enrolled" multiple size="10" class="form-control">
         <?php foreach ($users_not_in_course as $key => $user): ?>
-            <option value="<?php echo $user->user_id; ?>"><?php echo '(' . $user->user_id . ') ' . $user->name; ?></option>
+            <option value="<?php echo $user->id; ?>"><?php echo '(' . $user->id . ') ' . $user->name; ?></option>
         <? endforeach; ?>
     </select>
   </div>
@@ -76,7 +76,3 @@
     });
 
 </script>
-<?php else:
-        redirect(base_url());
-?>
-<?php endif; ?>
