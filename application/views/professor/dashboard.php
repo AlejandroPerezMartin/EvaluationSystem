@@ -38,9 +38,21 @@
                 Select <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a title="View exam" href="<?php echo base_url() . 'index.php/exams/view/' . $exam_data->exam_template_id ?>">View</a></li>
-                <li><a title="Edit exam" href="<?php echo base_url() . 'index.php/exams/edit/' . $exam_data->exam_template_id ?>">Edit</a></li>
-                <li><a title="Remove exam" class="remove-exam" href="<?php echo base_url() . 'index.php/exams/remove/' . $exam_data->exam_template_id ?>">Remove</a></li>
+                <li>
+                  <a title="View exam" href="<?php echo base_url() . 'index.php/exams/view/' . $exam_data->exam_template_id ?>">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;View
+                  </a>
+                </li>
+                <li>
+                  <a title="Edit exam" href="<?php echo base_url() . 'index.php/exams/edit/' . $exam_data->exam_template_id ?>">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;Edit
+                  </a>
+                </li>
+                <li>
+                  <a title="Remove exam" class="remove-exam" href="<?php echo base_url() . 'index.php/exams/remove/' . $exam_data->exam_template_id ?>">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Remove
+                  </a>
+                </li>
               </ul>
             </div><!-- /btn-group -->
           </td>

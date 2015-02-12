@@ -1,6 +1,6 @@
 
 <div class="page-header">
-    <h1><?php echo $course_name; ?><br><small>Enroll/Uneroll students</small></h1>
+    <h1><?php echo $course_name; ?><br><small>Enroll/Unenroll students</small></h1>
 </div>
 <div class="row">
 
@@ -8,19 +8,20 @@
     <h4>Available students:</h4>
     <select name="users_not_enrolled" id="users_not_enrolled" multiple size="10" class="form-control">
         <?php foreach ($users_not_in_course as $key => $user): ?>
-            <option value="<?php echo $user->id; ?>"><?php echo '(' . $user->id . ') ' . $user->name; ?></option>
+            <option value="<?php echo $user->id; ?>"><?php echo '[' . $user->id . '] ' . $user->name; ?></option>
         <? endforeach; ?>
     </select>
   </div>
 
   <div class="col-xs-4 col-md-2 text-center">
+    <br><br><br><br>
     <p>
-        <button class="btn btn-primary" id="enroll" type="submit">
+        <button class="btn btn-primary btn-lg" id="enroll" type="submit">
             Enroll <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         </button>
     </p>
     <p>
-        <button class="btn btn-primary" id="unenroll" type="submit">
+        <button class="btn btn-primary btn-lg" id="unenroll" type="submit">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Unenroll
         </button>
     </p>
@@ -30,7 +31,7 @@
     <h4>Enrolled students:</h4>
       <select name="users_enrolled" id="users_enrolled" multiple size="10" class="form-control">
       <?php foreach ($users_in_course as $key => $user): ?>
-          <option value="<?php echo $user->user_id; ?>"><?php echo '(' . $user->user_id . ') ' . $user->name; ?></option>
+          <option value="<?php echo $user->user_id; ?>"><?php echo '[' . $user->user_id . '] ' . $user->name; ?></option>
       <? endforeach; ?>
       </select>
   </div>

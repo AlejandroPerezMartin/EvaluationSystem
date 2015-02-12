@@ -149,7 +149,7 @@
 
     <!-- Split button -->
     <div class="btn-group">
-      <button type="button" class="btn btn-lg btn-primary">Add +</button>
+      <button type="button" class="btn btn-lg btn-primary">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
       <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
@@ -160,7 +160,7 @@
       </ul>
     </div>
     <a href="<?php echo base_url(); ?>" class="btn btn-default btn-lg">Cancel</a>
-    <button type="submit" class="btn btn-success btn-lg">Save changes</button>
+    <button type="submit" class="btn btn-success btn-lg">Save changes <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
 
 <script>
 
